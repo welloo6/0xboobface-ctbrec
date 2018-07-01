@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+	<id>win64-jre</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<files>
+		<file>
+			<source>${project.build.directory}/ctbrec.exe</source>
+			<outputDirectory>ctbrec</outputDirectory>
+		</file>
+		<file>
+			<source>${project.basedir}/server.bat</source>
+			<outputDirectory>ctbrec</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>${project.build.directory}/${name.final}.jar</source>
+			<outputDirectory>ctbrec</outputDirectory>
+		</file>
+	</files>
+	<fileSets>
+		<fileSet>
+			<directory>jre</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+			<outputDirectory>ctbrec/jre</outputDirectory>
+			<filtered>false</filtered>
+		</fileSet>
+	</fileSets>
+</assembly>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+	<id>linux</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<files>
+		<file>
+			<source>${project.basedir}/ctbrec.sh</source>
+			<outputDirectory>ctbrec</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>${project.basedir}/server.sh</source>
+			<outputDirectory>ctbrec</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>${project.build.directory}/${name.final}.jar</source>
+			<outputDirectory>ctbrec</outputDirectory>
+		</file>
+	</files>
+</assembly>
