@@ -1,8 +1,10 @@
 package ctbrec.ui;
 
 
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -36,8 +38,15 @@ public class DonateTabFx extends Tab {
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER);
         header.getChildren().add(headerVbox);
-        header.setPadding(new Insets(20, 0, 30, 0));
+        header.setPadding(new Insets(20, 0, 0, 0));
         container.setTop(header);
+
+        ImageView coffeeImage = new ImageView(getClass().getResource("/html/buymeacoffee-fancy.png").toString());
+        Button coffeeButton = new Button("Buy me a coffee");
+        coffeeButton.setOnMouseClicked((e) -> { Launcher.open("https://www.buymeacoffee.com/0xboobface"); });
+        VBox buyCoffeeBox = new VBox(5);
+        buyCoffeeBox.setAlignment(Pos.TOP_CENTER);
+        buyCoffeeBox.getChildren().addAll(coffeeImage, coffeeButton);
 
         int prefWidth = 360;
         TextField bitcoinAddress = new TextField("15sLWZon8diPqAX4UdPQU1DcaPuvZs2GgA");
@@ -74,6 +83,9 @@ public class DonateTabFx extends Tab {
         coinBox.setAlignment(Pos.CENTER);
         coinBox.setSpacing(50);
         coinBox.getChildren().addAll(bitcoinBox, ethereumBox, moneroBox);
-        container.setCenter(coinBox);
+
+        VBox centerBox = new VBox(50);
+        centerBox.getChildren().addAll(buyCoffeeBox, coinBox);
+        container.setCenter(centerBox);
     }
 }

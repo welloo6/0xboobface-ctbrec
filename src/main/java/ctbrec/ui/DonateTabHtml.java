@@ -1,7 +1,5 @@
 package ctbrec.ui;
 
-import java.net.URL;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +20,7 @@ public class DonateTabHtml extends Tab {
         browser = new WebView();
         try {
             WebEngine webEngine = browser.getEngine();
-            URL donatePage = getClass().getResource("/html/donate.html");
-            webEngine.load(donatePage.toString());
+            webEngine.load("https://0xboobface.github.io/ctbrec/#donate");
             webEngine.setJavaScriptEnabled(true);
             webEngine.setOnAlert((e) -> {
                 System.out.println(e.getData());
