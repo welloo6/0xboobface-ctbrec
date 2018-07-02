@@ -64,7 +64,7 @@
       </div>
     </header>
     
-    <!-- About Section -->
+    <!-- About/Download Section -->
     <section class="text-secondary mb-0" id="about">
       <div class="container">
         <h2 class="text-center text-uppercase text-secondary">About</h2>
@@ -77,21 +77,26 @@
             <p class="lead">CTB Recorder allows you to record any public show on Chaturbate. It is very easy to use and set up in minutes. You can even run the recorder on a server and control it with the graphical user interface, so that you never miss a show again.</p>
           </div>
         </div>
+        <script>
+    	function downloadFile(uri) {
+    		location.href = uri; 
+    	}
+    	</script>
         <div class="row text-center">
             <div class="col">
-                <a class="btn btn-xl btn-outline-dark" href="https://github.com/0xboobface/ctbrec/releases/download/1.0.0/ctbrec-1.0.0-win64-jre.zip">
+                <a class="btn btn-xl btn-outline-dark" href="#donate" onclick="downloadFile('https://github.com/0xboobface/ctbrec/releases/download/1.0.0/ctbrec-1.0.0-win64-jre.zip');">
                     <i class="fa fa-windows mr-2"></i>
                     Download for Windows!
                 </a>
             </div>
             <div class="col">
-                <a class="btn btn-xl btn-outline-dark" href="https://github.com/0xboobface/ctbrec/releases/download/1.0.0/ctbrec-1.0.0-win64.zip">
+                <a class="btn btn-xl btn-outline-dark" href="#donate" onclick="downloadFile('https://github.com/0xboobface/ctbrec/releases/download/1.0.0/ctbrec-1.0.0-win64.zip');">
                     <i class="fa fa-windows mr-2"></i>
                     Download for Windows (no JRE)!
                 </a>
             </div>
             <div class="col">
-                <a class="btn btn-xl btn-outline-dark" href="https://github.com/0xboobface/ctbrec/releases/download/1.0.0/ctbrec-1.0.0-linux.zip">
+                <a class="btn btn-xl btn-outline-dark" href="#donate" onclick="downloadFile('https://github.com/0xboobface/ctbrec/releases/download/1.0.0/ctbrec-1.0.0-linux.zip');">
                     <i class="fa fa-linux mr-2"></i>
                     Download for Linux!
                 </a>
@@ -100,11 +105,26 @@
       </div>
     </section>
 
+    <section class="portfolio bg-primary" id="donate">
+    	<div class="container">
+        	<h2 class="text-light text-center text-uppercase mb-0">Donate</h2>
+	        <hr class="star-light mb-5">
+	        <div class="row">
+	        	<div class="col-lg-8 mx-auto text-center text-light">
+	        		<p class="lead">
+            		CTB Recorder is free and open source. I'm a student and wrote this software in my spare time. 
+            		If you like the software or want to suggest a new feature, please consider buying me a coffee or two. Thanks!
+            		</p>
+          		</div>
+	        </div>
+       	</div>
+    </section>
+    
     <!-- Screenshots Grid Section -->
-    <section class="portfolio bg-primary" id="portfolio">
+    <section class="portfolio" id="portfolio">
       <div class="container">
-        <h2 class="bg-primary text-center text-uppercase text-white mb-0">Screenshots</h2>
-        <hr class="star-light mb-5">
+        <h2 class="text-center text-uppercase mb-0">Screenshots</h2>
+        <hr class="star-dark mb-5">
         <div class="row">
           <div class="col-md-6 col-lg-4">
             <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-1">
@@ -171,17 +191,17 @@
         </div>
       </div>
     </section>
-
     
-    
-    <!-- Contact Section -->
+    <!-- Source Code Section -->
     <section id="contact">
       <div class="container">
         <h2 class="text-center text-uppercase text-secondary mb-0">Source Code</h2>
         <hr class="star-dark mb-5">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
+          	<p class="lead">
             CTB Recorder is free and open source. The source code is available on <a href="https://github.com/0xboobface/ctbrec">Github</a>.
+            </p>
           </div>
         </div>
       </div>
@@ -395,8 +415,10 @@
     <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
     <!-- Contact Form JavaScript -->
+    <!--
     <script src="js/jqBootstrapValidation.js"></script>
     <script src="js/contact_me.js"></script>
+    -->
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
