@@ -47,10 +47,13 @@
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Screenshots</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Source Code</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#faq">FAQ</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              	<a href="https://www.buymeacoffee.com/0xboobface" target="_blank" style="margin-left: 100px">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#code">Source Code</a>
+            </li>
+            <li class="nav-item mx-0 mx-lg-1">
+              	<a href="https://www.buymeacoffee.com/0xboobface" target="_blank" style="margin-left: 10px">
             		<img src="img/buymeacoffee/Button/button-red.png" alt="Buy a coffee"/>
            		</a>
             </li>
@@ -230,9 +233,149 @@
         </div>
       </div>
     </section>
-    
-    <!-- Source Code Section -->
-    <section id="contact">
+
+	<!-- FAQ Section -->
+	<section id="faq" class="bg-primary text-light">
+		<div class="container">
+			<h2 class="text-center text-uppercase mb-0">FAQ</h2>
+			<hr class="star-light mb-5">
+			<div class="row">
+				<div class="col-lg-12">
+				<div class="accordion text-dark" id="accordionExample">
+				  
+				  <!-- only .ts files -->
+				  <div class="card">
+				    <div class="card-header" id="headingOne">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				          The recordings directory only contains a bunch of .ts files. What do I do with them?
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="card-body">CTB Recorder also creates a
+									playlist file called playlist.m3u8. If your media player is
+									capable of playing playlist, you can just open the playlist and
+									enjoy your recording. Alternatively go to recordings tab, right
+									click on the recording and select "Merge segments". This will
+									create one big .ts file of the whole recording.
+						</div>
+					</div>
+				  </div>
+				  
+				  <!-- What are .ts files -->
+				  <div class="card">
+				    <div class="card-header" id="headingTwo">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				          What is a .ts file?
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+						<div class="card-body">
+							A .ts file is a MPEG transport stream, which contains the video and
+							audio of the stream. If you want to convert a .ts file into mp4
+							or mkv you can use a program like <a
+								href="https://handbrake.fr/">Handbrake</a> or <a href="http://avidemux.sourceforge.net/">Avidemux</a>.
+						</div>
+					</div>
+				  </div>
+				  
+				  <!-- How do I run the server -->
+				  <div class="card">
+				    <div class="card-header" id="headingThree">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+				          How do I run the server?
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+				      <div class="card-body">
+				        The archive you downloaded contains a server.bat or server.sh, which can be used to start the server. On the first start, the server uses a default
+				        configuration. Once you terminate the server by pressing <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd>, the config is stored in your user home.<br/>
+				        On windows that is <code>C:\Users\{your user name}\AppData\Roaming\ctbrec\server.json</code><br/>
+				        On linux that is <code>~/.config/ctbrec/server.json</code><br/>
+				        You can open this file in a text editor and change it to your likings. You probably only want to change <code>httpPort</code> and <code>recordingsDir</code>.
+				        Most of the other stuff is irrelevant since the server and CTB Recorder use the same config file format.
+				        When the server is running, you can connect to it with CTB Recorder by changing the setting "Record location" to "Remote".
+				      </div>
+				    </div>
+				  </div>
+				  
+				  <!-- Difference Win JRE -->
+				  <div class="card">
+				    <div class="card-header" id="headingFour">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+				          What is the difference between the Windows download and Windows (no JRE)?
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+				      <div class="card-body">
+				        If you know what Java is and if you know, that you have Java installed, you can use the (no JRE) version. Otherwise you are better off using the
+				        standard Windows download, because it comes with all necessary dependencies.
+				      </div>
+				    </div>
+				  </div>
+				  
+				  <!-- Help -->
+				  <div class="card">
+				    <div class="card-header" id="headingFive">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+				          I need help!
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+				      <div class="card-body">
+				        Go to the project website and <a href="https://github.com/0xboobface/ctbrec/issues">create a new Issue</a>.
+				      </div>
+				    </div>
+				  </div>
+				  
+				  <!-- Feature request -->
+				  <div class="card">
+				    <div class="card-header" id="headingSix">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+				          I have a suggestion for a new feature!
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+				      <div class="card-body">
+				        Go to the project website and <a href="https://github.com/0xboobface/ctbrec/issues">create a new Issue</a>.
+				      </div>
+				    </div>
+				  </div>
+				  
+				  <!-- Bug -->
+				  <div class="card">
+				    <div class="card-header" id="headingSeven">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+				          I found a bug! Where can I report it?
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+				      <div class="card-body">
+				        Go to the project website and <a href="https://github.com/0xboobface/ctbrec/issues">create a new Issue</a>.
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Source Code Section -->
+    <section id="code">
       <div class="container">
         <h2 class="text-center text-uppercase text-secondary mb-0">Source Code</h2>
         <hr class="star-dark mb-5">
