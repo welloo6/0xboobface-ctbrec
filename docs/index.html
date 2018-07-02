@@ -101,9 +101,9 @@
     		}, 1000);
         }
     	function downloadFile(uri) {
+    		cnt = 10;
 			$('#download-counter').show();
 			$('#download-counter').html("Your download starts in... " + cnt);
-    		cnt = 10;
     		downloadCounter(uri);
     	}
     	</script>
