@@ -21,12 +21,15 @@ import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
@@ -35,6 +38,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 public class RecordedModelsTab extends Tab implements TabSelectionListener {
@@ -48,6 +52,10 @@ public class RecordedModelsTab extends Tab implements TabSelectionListener {
     TableView<JavaFxModel> table = new TableView<JavaFxModel>();
     ObservableList<JavaFxModel> observableModels = FXCollections.observableArrayList();
     ContextMenu popup = createContextMenu();
+
+    Label modelLabel = new Label("Model");
+    TextField model = new TextField();
+    Button addModelButton = new Button("Record");
 
     public RecordedModelsTab(String title, Recorder recorder) {
         super(title);
@@ -93,8 +101,29 @@ public class RecordedModelsTab extends Tab implements TabSelectionListener {
         });
         scrollPane.setContent(table);
 
+        HBox addModelBox = new HBox(5);
+        addModelBox.getChildren().addAll(modelLabel, model, addModelButton);
+        modelLabel.setPadding(new Insets(5, 0, 0, 0));
+        model.setPrefWidth(300);
+        BorderPane.setMargin(addModelBox, new Insets(5));
+        addModelButton.setOnAction((e) -> {
+            Model m = new Model();
+            m.setName(model.getText());
+            m.setUrl("https://chaturbate.com/" + m.getName() + "/");
+            try {
+                recorder.startRecording(m);
+            } catch (IOException e1) {
+                Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Couldn't add model");
+                alert.setContentText("The model " + m.getName() + " could not be added: " + e1.getLocalizedMessage());
+                alert.showAndWait();
+            }
+        });
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(5));
+        root.setTop(addModelBox);
         root.setCenter(scrollPane);
         setContent(root);
     }
