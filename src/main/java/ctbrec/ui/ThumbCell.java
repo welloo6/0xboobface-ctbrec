@@ -71,10 +71,11 @@ public class ThumbCell extends StackPane {
 
     private HttpClient client;
 
+    private ThumbOverviewTab parent;
     private ObservableList<Node> thumbCellList;
 
-
     public ThumbCell(ThumbOverviewTab parent, Model model, Recorder recorder, HttpClient client) {
+        this.parent = parent;
         this.thumbCellList = parent.grid.getChildren();
         this.model = model;
         this.recorder = recorder;
@@ -200,7 +201,8 @@ public class ThumbCell extends StackPane {
         contextMenu.setAutoHide(true);
         contextMenu.setHideOnEscape(true);
         contextMenu.setAutoFix(true);
-        contextMenu.getItems().addAll(openInPlayer, startStop , follow, unfollow);
+        MenuItem followOrUnFollow = parent instanceof FollowedTab ? unfollow : follow;
+        contextMenu.getItems().addAll(openInPlayer, startStop , followOrUnFollow);
         return contextMenu;
     }
 
