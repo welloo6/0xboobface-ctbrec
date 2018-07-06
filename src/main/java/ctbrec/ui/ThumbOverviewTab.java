@@ -274,15 +274,16 @@ public class ThumbOverviewTab extends Tab implements TabSelectionListener {
     }
 
     private void moveActiveRecordingsToFront() {
-        // move active recordings to the front
+        List<Node> thumbsToMove = new ArrayList<>();
         ObservableList<Node> thumbs = grid.getChildren();
         for (int i = thumbs.size()-1; i > 0; i--) {
             ThumbCell thumb = (ThumbCell) thumbs.get(i);
             if(recorder.isRecording(thumb.getModel())) {
                 thumbs.remove(i);
-                thumbs.add(0, thumb);
+                thumbsToMove.add(0, thumb);
             }
         }
+        thumbs.addAll(0, thumbsToMove);
     }
 
     private void insert(ThumbCell thumbCell) {
