@@ -72,10 +72,7 @@ public class RemoteRecorder implements Recorder {
         String json = response.body().string();
         if(response.isSuccessful()) {
             ModelListResponse resp = modelListResponseAdapter.fromJson(json);
-            if(resp.status.equals("success")) {
-                models = resp.models;
-                lastSync = Instant.now();
-            } else {
+            if(!resp.status.equals("success")) {
                 throw new IOException("Server returned error " + resp.status + " " + resp.msg);
             }
         } else {
