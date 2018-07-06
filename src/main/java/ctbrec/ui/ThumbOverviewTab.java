@@ -201,11 +201,13 @@ public class ThumbOverviewTab extends Tab implements TabSelectionListener {
                     nodes.add(thumbCell);
                 }
             }
+
+            filter();
+            moveActiveRecordingsToFront();
         } finally {
             gridLock.unlock();
         }
 
-        filter();
     }
 
     protected void onFail(WorkerStateEvent event) {
@@ -243,7 +245,6 @@ public class ThumbOverviewTab extends Tab implements TabSelectionListener {
                 for (ThumbCell thumbCell : filteredThumbCells) {
                     insert(thumbCell);
                 }
-                moveActiveRecordingsToFront();
                 return;
             }
 
@@ -267,8 +268,6 @@ public class ThumbOverviewTab extends Tab implements TabSelectionListener {
                     insert(thumbCell);
                 }
             }
-
-            moveActiveRecordingsToFront();
         } finally {
             gridLock.unlock();
         }

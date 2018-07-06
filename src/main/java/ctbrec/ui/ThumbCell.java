@@ -323,8 +323,10 @@ public class ThumbCell extends StackPane {
         if(recording) {
             recordingAnimation.playFromStart();
             colorNormal = colorRecording;
+            nameBackground.setFill(colorNormal);
         } else {
             colorNormal = Color.BLACK;
+            nameBackground.setFill(colorNormal);
             recordingAnimation.stop();
         }
         recordingIndicator.setVisible(recording);
@@ -436,16 +438,16 @@ public class ThumbCell extends StackPane {
     }
 
     private void update() {
+        setRecording(recorder.isRecording(model));
         setImage(model.getPreview());
         topic.setText(model.getDescription());
-        setRecording(recorder.isRecording(model));
-        requestLayout();
         if(Config.getInstance().getSettings().determineResolution) {
             determineResolution();
         } else {
             resolutionBackground.setVisible(false);
             resolutionTag.setVisible(false);
         }
+        requestLayout();
     }
 
     @Override
