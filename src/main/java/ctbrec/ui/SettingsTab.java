@@ -106,7 +106,12 @@ public class SettingsTab extends Tab {
         layout.add(new Label("Display stream resolution in overview"), 0, ++row);
         loadResolution = new CheckBox();
         loadResolution.setSelected(Config.getInstance().getSettings().determineResolution);
-        loadResolution.setOnAction((e) -> Config.getInstance().getSettings().determineResolution = loadResolution.isSelected());
+        loadResolution.setOnAction((e) -> {
+            Config.getInstance().getSettings().determineResolution = loadResolution.isSelected();
+            if(!loadResolution.isSelected()) {
+                ThumbOverviewTab.queue.clear();
+            }
+        });
         layout.add(loadResolution, 1, row);
 
         layout.add(new Label(), 0, ++row);

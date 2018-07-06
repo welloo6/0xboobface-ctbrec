@@ -442,6 +442,9 @@ public class ThumbCell extends StackPane {
         requestLayout();
         if(Config.getInstance().getSettings().determineResolution) {
             determineResolution();
+        } else {
+            resolutionBackground.setVisible(false);
+            resolutionTag.setVisible(false);
         }
     }
 
