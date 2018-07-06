@@ -75,6 +75,12 @@ public class RemoteRecorder implements Recorder {
             if(!resp.status.equals("success")) {
                 throw new IOException("Server returned error " + resp.status + " " + resp.msg);
             }
+
+            if("start".equals(action)) {
+                models.add(model);
+            } else {
+                models.remove(model);
+            }
         } else {
             throw new IOException("Server returned error. HTTP status: " + response.code());
         }
