@@ -1,11 +1,17 @@
 package ctbrec.ui;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.iheartradio.m3u8.ParseException;
+import com.iheartradio.m3u8.PlaylistException;
+
+import ctbrec.Config;
 import ctbrec.HttpClient;
 import ctbrec.Model;
 import ctbrec.recorder.Chaturbate;
@@ -54,12 +60,17 @@ public class ThumbCell extends StackPane {
     private static final int HEIGHT = 135;
     private static final Duration ANIMATION_DURATION = new Duration(250);
 
+    // this acts like a cache, once the stream resolution for a model has been determined, we don't do it again (until ctbrec is restarted)
+    private static Map<String, int[]> resolutions = new HashMap<>();
+
     private Model model;
     private ImageView iv;
+    private Rectangle resolutionBackground;
     private Rectangle nameBackground;
     private Rectangle topicBackground;
     private Text name;
     private Text topic;
+    private Text resolutionTag;
     private Recorder recorder;
     private Circle recordingIndicator;
     private FadeTransition recordingAnimation;
@@ -102,6 +113,15 @@ public class ThumbCell extends StackPane {
         StackPane.setAlignment(topicBackground, Pos.TOP_LEFT);
         getChildren().add(topicBackground);
 
+        resolutionBackground = new Rectangle(34, 16);
+        resolutionBackground.setFill(new Color(0.22, 0.8, 0.29, 1));
+        resolutionBackground.setVisible(false);
+        resolutionBackground.setArcHeight(5);
+        resolutionBackground.setArcWidth(resolutionBackground.getArcHeight());
+        StackPane.setAlignment(resolutionBackground, Pos.TOP_RIGHT);
+        StackPane.setMargin(resolutionBackground, new Insets(2));
+        getChildren().add(resolutionBackground);
+
         name = new Text(model.getName());
         name.setFill(Color.WHITE);
         name.setFont(new Font("Sansserif", 16));
@@ -125,10 +145,17 @@ public class ThumbCell extends StackPane {
         StackPane.setAlignment(topic, Pos.TOP_CENTER);
         getChildren().add(topic);
 
+        resolutionTag = new Text();
+        resolutionTag.setFill(Color.WHITE);
+        resolutionTag.setVisible(false);
+        StackPane.setAlignment(resolutionTag, Pos.TOP_RIGHT);
+        StackPane.setMargin(resolutionTag, new Insets(2, 4, 2, 2));
+        getChildren().add(resolutionTag);
+
         recordingIndicator = new Circle(8);
         recordingIndicator.setFill(colorRecording);
         StackPane.setMargin(recordingIndicator, new Insets(3));
-        StackPane.setAlignment(recordingIndicator, Pos.TOP_RIGHT);
+        StackPane.setAlignment(recordingIndicator, Pos.TOP_LEFT);
         getChildren().add(recordingIndicator);
         recordingAnimation = new FadeTransition(Duration.millis(1000), recordingIndicator);
         recordingAnimation.setInterpolator(Interpolator.EASE_BOTH);
@@ -163,6 +190,50 @@ public class ThumbCell extends StackPane {
         setPrefSize(WIDTH, HEIGHT);
 
         setRecording(recording);
+        if(Config.getInstance().getSettings().determineResolution) {
+            determineResolution();
+        }
+    }
+
+    private void determineResolution() {
+        if(ThumbOverviewTab.resolutionProcessing.contains(model)) {
+            return;
+        }
+
+        ThumbOverviewTab.resolutionProcessing.add(model);
+        int[] res = resolutions.get(model.getName());
+        if(res == null) {
+            ThumbOverviewTab.threadPool.submit(() -> {
+                try {
+                    Thread.sleep(500); // throttle down, so that we don't do too many requests
+                    int[] resolution = Chaturbate.getResolution(model, client);
+                    resolutions.put(model.getName(), resolution);
+                    if (resolution[1] > 0) {
+                        LOG.trace("Model resolution {} {}x{}", model.getName(), resolution[0], resolution[1]);
+                        LOG.trace("Resolution queue size: {}", ThumbOverviewTab.queue.size());
+                        final int w = resolution[1];
+                        Platform.runLater(() -> {
+                            resolutionTag.setText(Integer.toString(w));
+                            resolutionTag.setVisible(true);
+                            resolutionBackground.setVisible(true);
+                            resolutionBackground.setWidth(resolutionTag.getBoundsInLocal().getWidth() + 4);
+                        });
+                    }
+                } catch (IOException | ParseException | PlaylistException | InterruptedException e) {
+                    LOG.error("Coulnd't get resolution for model {}", model, e);
+                } finally {
+                    ThumbOverviewTab.resolutionProcessing.remove(model);
+                }
+            });
+        } else {
+            ThumbOverviewTab.resolutionProcessing.remove(model);
+            Platform.runLater(() -> {
+                resolutionTag.setText(Integer.toString(res[1]));
+                resolutionTag.setVisible(true);
+                resolutionBackground.setVisible(true);
+                resolutionBackground.setWidth(resolutionTag.getBoundsInLocal().getWidth() + 4);
+            });
+        }
     }
 
     private void setImage(String url) {
@@ -369,6 +440,9 @@ public class ThumbCell extends StackPane {
         topic.setText(model.getDescription());
         setRecording(recorder.isRecording(model));
         requestLayout();
+        if(Config.getInstance().getSettings().determineResolution) {
+            determineResolution();
+        }
     }
 
     @Override

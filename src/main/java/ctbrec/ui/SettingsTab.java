@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -41,6 +42,7 @@ public class SettingsTab extends Tab {
     private TextField username;
     private TextField server;
     private TextField port;
+    private CheckBox loadResolution;
     private PasswordField password;
     private RadioButton recordLocal;
     private RadioButton recordRemote;
@@ -100,6 +102,12 @@ public class SettingsTab extends Tab {
         GridPane.setHgrow(password, Priority.ALWAYS);
         GridPane.setColumnSpan(password, 2);
         layout.add(password, 1, row);
+
+        layout.add(new Label("Display stream resolution in overview"), 0, ++row);
+        loadResolution = new CheckBox();
+        loadResolution.setSelected(Config.getInstance().getSettings().determineResolution);
+        loadResolution.setOnAction((e) -> Config.getInstance().getSettings().determineResolution = loadResolution.isSelected());
+        layout.add(loadResolution, 1, row);
 
         layout.add(new Label(), 0, ++row);
 

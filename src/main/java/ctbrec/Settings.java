@@ -15,4 +15,5 @@ public class Settings {
     public String password = "";
     public String lastDownloadDir = "";
     public List<Model> models = new ArrayList<Model>();
+    public boolean determineResolution = false;
 }
