@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -175,7 +177,7 @@ public class RecordingsTab extends Tab implements TabSelectionListener {
             protected Task<List<JavaFxRecording>> createTask() {
                 return new Task<List<JavaFxRecording>>() {
                     @Override
-                    public List<JavaFxRecording> call() throws IOException {
+                    public List<JavaFxRecording> call() throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
                         List<JavaFxRecording> recordings = new ArrayList<>();
                         for (Recording rec : recorder.getRecordings()) {
                             recordings.add(new JavaFxRecording(rec));
@@ -446,7 +448,7 @@ public class RecordingsTab extends Tab implements TabSelectionListener {
                     try {
                         recorder.delete(r);
                         Platform.runLater(() -> observableRecordings.remove(r));
-                    } catch (IOException e1) {
+                    } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | IllegalStateException e1) {
                         LOG.error("Error while deleting recording", e1);
                         showErrorDialog("Error while deleting recording", "Recording not deleted", e1);
                     } finally {

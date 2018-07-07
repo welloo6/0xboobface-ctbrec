@@ -1,6 +1,9 @@
 package ctbrec.recorder;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -12,12 +15,14 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import ctbrec.Config;
+import ctbrec.Hmac;
 import ctbrec.HttpClient;
 import ctbrec.InstantJsonAdapter;
 import ctbrec.Model;
 import ctbrec.Recording;
 import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
@@ -49,25 +54,26 @@ public class RemoteRecorder implements Recorder {
     }
 
     @Override
-    public void startRecording(Model model) throws IOException {
+    public void startRecording(Model model) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
         sendRequest("start", model);
     }
 
     @Override
-    public void stopRecording(Model model) throws IOException, InterruptedException {
+    public void stopRecording(Model model) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
         sendRequest("stop", model);
     }
 
-    private void sendRequest(String action, Model model) throws IOException {
+    private void sendRequest(String action, Model model) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
         String requestTemplate = "{\"action\": \"<<action>>\", \"model\": <<model>>}";
         requestTemplate = requestTemplate.replaceAll("<<action>>", action);
         requestTemplate = requestTemplate.replaceAll("<<model>>", modelAdapter.toJson(model));
         LOG.debug("Sending request to recording server: {}", requestTemplate);
         RequestBody body = RequestBody.create(JSON, requestTemplate);
-        Request request = new Request.Builder()
+        Request.Builder builder = new Request.Builder()
                 .url("http://" + config.getSettings().httpServer + ":" + config.getSettings().httpPort + "/rec")
-                .post(body)
-                .build();
+                .post(body);
+        addHmacIfNeeded(requestTemplate, builder);
+        Request request = builder.build();
         Response response = client.execute(request);
         String json = response.body().string();
         if(response.isSuccessful()) {
@@ -83,6 +89,14 @@ public class RemoteRecorder implements Recorder {
             }
         } else {
             throw new IOException("Server returned error. HTTP status: " + response.code());
+        }
+    }
+
+    private void addHmacIfNeeded(String msg, Builder builder) throws InvalidKeyException, NoSuchAlgorithmException, IllegalStateException, UnsupportedEncodingException {
+        if(Config.getInstance().getSettings().requireAuthentication) {
+            byte[] key = Config.getInstance().getSettings().key;
+            String hmac = Hmac.calculate(msg, key);
+            builder.addHeader("CTBREC-HMAC", hmac);
         }
     }
 
@@ -116,12 +130,14 @@ public class RemoteRecorder implements Recorder {
         public void run() {
             running = true;
             while(running) {
-                RequestBody body = RequestBody.create(JSON, "{\"action\": \"list\"}");
-                Request request = new Request.Builder()
-                        .url("http://" + config.getSettings().httpServer + ":" + config.getSettings().httpPort + "/rec")
-                        .post(body)
-                        .build();
                 try {
+                    String msg = "{\"action\": \"list\"}";
+                    RequestBody body = RequestBody.create(JSON, msg);
+                    Request.Builder builder = new Request.Builder()
+                            .url("http://" + config.getSettings().httpServer + ":" + config.getSettings().httpPort + "/rec")
+                            .post(body);
+                    addHmacIfNeeded(msg, builder);
+                    Request request = builder.build();
                     Response response = client.execute(request);
                     String json = response.body().string();
                     if(response.isSuccessful()) {
@@ -135,7 +151,7 @@ public class RemoteRecorder implements Recorder {
                     } else {
                         LOG.error("Couldn't synchronize with server. HTTP status: {} - {}", response.code(), json);
                     }
-                } catch (IOException e) {
+                } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | IllegalStateException e) {
                     LOG.error("Couldn't synchronize with server", e);
                 }
 
@@ -170,13 +186,14 @@ public class RemoteRecorder implements Recorder {
     }
 
     @Override
-    public List<Recording> getRecordings() throws IOException {
-        RequestBody body = RequestBody.create(JSON, "{\"action\": \"recordings\"}");
-        Request request = new Request.Builder()
+    public List<Recording> getRecordings() throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
+        String msg = "{\"action\": \"recordings\"}";
+        RequestBody body = RequestBody.create(JSON, msg);
+        Request.Builder builder = new Request.Builder()
                 .url("http://" + config.getSettings().httpServer + ":" + config.getSettings().httpPort + "/rec")
-                .post(body)
-                .build();
-
+                .post(body);
+        addHmacIfNeeded(msg, builder);
+        Request request = builder.build();
         Response response = client.execute(request);
         String json = response.body().string();
         if(response.isSuccessful()) {
@@ -196,22 +213,24 @@ public class RemoteRecorder implements Recorder {
     }
 
     @Override
-    public void delete(Recording recording) throws IOException {
-        RequestBody body = RequestBody.create(JSON, "{\"action\": \"delete\", \"recording\": \""+recording.getPath()+"\"}");
-        Request request = new Request.Builder()
+    public void delete(Recording recording) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
+        String msg = "{\"action\": \"delete\", \"recording\": \""+recording.getPath()+"\"}";
+        RequestBody body = RequestBody.create(JSON, msg);
+        Request.Builder builder = new Request.Builder()
                 .url("http://" + config.getSettings().httpServer + ":" + config.getSettings().httpPort + "/rec")
-                .post(body)
-                .build();
-
+                .post(body);
+        addHmacIfNeeded(msg, builder);
+        Request request = builder.build();
         Response response = client.execute(request);
         String json = response.body().string();
+        RecordingListResponse resp = recordingListResponseAdapter.fromJson(json);
         if(response.isSuccessful()) {
-            RecordingListResponse resp = recordingListResponseAdapter.fromJson(json);
             if(!resp.status.equals("success")) {
-                throw new IOException("Couldn't delete recording: " + resp.status + " " + resp.msg);
+                throw new IOException("Couldn't delete recording: " + resp.msg);
             }
         } else {
-            throw new IOException("Couldn't delete recording: " + response.code() + " " + json);
+            throw new IOException("Couldn't delete recording: " + resp.msg);
+            //throw new IOException("Couldn't delete recording: " + response.code() + " " + json);
         }
     }
 }

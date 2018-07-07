@@ -1,6 +1,8 @@
 package ctbrec.ui;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -112,7 +114,7 @@ public class RecordedModelsTab extends Tab implements TabSelectionListener {
             m.setUrl("https://chaturbate.com/" + m.getName() + "/");
             try {
                 recorder.startRecording(m);
-            } catch (IOException e1) {
+            } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | IllegalStateException e1) {
                 Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Couldn't add model");
@@ -229,16 +231,7 @@ public class RecordedModelsTab extends Tab implements TabSelectionListener {
                     try {
                         recorder.stopRecording(selected);
                         observableModels.remove(selected);
-                    } catch (IOException e1) {
-                        LOG.error("Couldn't stop recording", e1);
-                        Platform.runLater(() -> {
-                            Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
-                            alert.setTitle("Error");
-                            alert.setHeaderText("Couldn't stop recording");
-                            alert.setContentText("I/O error while stopping the recording: " + e1.getLocalizedMessage());
-                            alert.showAndWait();
-                        });
-                    } catch (InterruptedException e1) {
+                    } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | IllegalStateException e1) {
                         LOG.error("Couldn't stop recording", e1);
                         Platform.runLater(() -> {
                             Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);

@@ -82,7 +82,7 @@ public class LocalRecorder implements Recorder {
     }
 
     @Override
-    public void stopRecording(Model model) throws IOException, InterruptedException {
+    public void stopRecording(Model model) throws IOException {
         lock.lock();
         try {
             if (models.contains(model)) {
@@ -130,7 +130,7 @@ public class LocalRecorder implements Recorder {
         }
     }
 
-    private void stopRecordingProcess(Model model) throws IOException, InterruptedException {
+    private void stopRecordingProcess(Model model) throws IOException {
         lock.lock();
         try {
             Download download = recordingProcesses.get(model);

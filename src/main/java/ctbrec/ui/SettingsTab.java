@@ -2,11 +2,13 @@ package ctbrec.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ctbrec.Config;
+import ctbrec.Hmac;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -20,6 +22,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Border;
@@ -43,6 +46,7 @@ public class SettingsTab extends Tab {
     private TextField server;
     private TextField port;
     private CheckBox loadResolution;
+    private CheckBox secureCommunication;
     private PasswordField password;
     private RadioButton recordLocal;
     private RadioButton recordRemote;
@@ -168,6 +172,32 @@ public class SettingsTab extends Tab {
         GridPane.setHgrow(port, Priority.ALWAYS);
         GridPane.setColumnSpan(port, 2);
         layout.add(port, 1, row);
+
+        layout.add(new Label("Require authentication"), 0, ++row);
+        secureCommunication = new CheckBox();
+        secureCommunication.setSelected(Config.getInstance().getSettings().requireAuthentication);
+        secureCommunication.setOnAction((e) -> {
+            Config.getInstance().getSettings().requireAuthentication = secureCommunication.isSelected();
+            if(secureCommunication.isSelected()) {
+                byte[] key = Config.getInstance().getSettings().key;
+                if(key == null) {
+                    key = Hmac.generateKey();
+                    Config.getInstance().getSettings().key = key;
+                }
+                TextInputDialog keyDialog = new TextInputDialog();
+                keyDialog.setResizable(true);
+                keyDialog.setTitle("Server Authentication");
+                keyDialog.setHeaderText("A key has been generated");
+                keyDialog.setContentText("Add this setting to your server's config.json:\n");
+                keyDialog.getEditor().setText("\"key\": " + Arrays.toString(key));
+                keyDialog.getEditor().setEditable(false);
+                keyDialog.setWidth(800);
+                keyDialog.setHeight(200);
+                keyDialog.show();
+            }
+        });
+        layout.add(secureCommunication, 1, row);
+
 
         server.setDisable(recordLocal.isSelected());
         port.setDisable(recordLocal.isSelected());
