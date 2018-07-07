@@ -5,16 +5,12 @@ import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,14 +20,12 @@ import org.slf4j.LoggerFactory;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import ctbrec.Config;
-import ctbrec.Hmac;
 import ctbrec.InstantJsonAdapter;
 import ctbrec.Model;
 import ctbrec.Recording;
 import ctbrec.recorder.Recorder;
 
-public class RecorderServlet extends HttpServlet {
+public class RecorderServlet extends AbstractCtbrecServlet {
 
     private static final transient Logger LOG = LoggerFactory.getLogger(RecorderServlet.class);
 
@@ -127,31 +121,6 @@ public class RecorderServlet extends HttpServlet {
             resp.getWriter().write(response);
             LOG.error("Unexpected error", t);
         }
-    }
-
-    private boolean checkAuthentication(HttpServletRequest req, String body) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
-        boolean authenticated = false;
-        if(Config.getInstance().getSettings().key != null) {
-            if(req.getHeader("CTBREC-HMAC") == null) {
-                authenticated = false;
-            }
-
-            byte[] key = Config.getInstance().getSettings().key;
-            authenticated = Hmac.validate(body, key, req.getHeader("CTBREC-HMAC"));
-        } else {
-            authenticated = true;
-        }
-        return authenticated;
-    }
-
-    private String body(HttpServletRequest req) throws IOException {
-        StringBuilder body = new StringBuilder();
-        BufferedReader br = req.getReader();
-        String line= null;
-        while( (line = br.readLine()) != null ) {
-            body.append(line).append("\n");
-        }
-        return body.toString().trim();
     }
 
     private static class Request {

@@ -1,6 +1,7 @@
 package ctbrec.recorder.server;
 
 import java.io.IOException;
+import java.net.BindException;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -82,8 +83,13 @@ public class HttpServer {
         holder = new ServletHolder(hlsServlet);
         handler.addServletWithMapping(holder, "/hls/*");
 
-        server.start();
-        server.join();
+        try {
+            server.start();
+            server.join();
+        } catch (BindException e) {
+            LOG.error("Port {} is already in use", http.getPort(), e);
+            System.exit(1);
+        }
     }
 
     public static void main(String[] args) throws Exception {
