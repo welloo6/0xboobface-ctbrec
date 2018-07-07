@@ -1,5 +1,6 @@
 package ctbrec;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -115,5 +116,24 @@ public class Recording {
         } else if (!getStartDate().equals(other.getStartDate()))
             return false;
         return true;
+    }
+
+    public static File mergedFileFromDirectory(File recDir) {
+        String date = recDir.getName();
+        String model = recDir.getParentFile().getName();
+        String filename = model + "-" + date + ".ts";
+        File mergedFile = new File(recDir, filename);
+        return mergedFile;
+    }
+
+    public static boolean isMergedRecording(File recDir) {
+        File mergedFile = mergedFileFromDirectory(recDir);
+        return mergedFile.exists();
+    }
+
+    public static boolean isMergedRecording(Recording recording) {
+        String recordingsDir = Config.getInstance().getSettings().recordingsDir;
+        File recDir = new File(recordingsDir, recording.getPath());
+        return isMergedRecording(recDir);
     }
 }

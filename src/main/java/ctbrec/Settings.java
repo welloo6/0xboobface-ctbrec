@@ -15,6 +15,8 @@ public class Settings {
     public String password = "";
     public String lastDownloadDir = "";
     public List<Model> models = new ArrayList<Model>();
+    public boolean automerge = false;
+    public boolean automergeKeepSegments = false;
     public boolean determineResolution = false;
     public boolean requireAuthentication = false;
     public byte[] key = null;

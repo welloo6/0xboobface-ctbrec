@@ -233,4 +233,9 @@ public class RemoteRecorder implements Recorder {
             //throw new IOException("Couldn't delete recording: " + response.code() + " " + json);
         }
     }
+
+    @Override
+    public void merge(Recording recording, boolean keepSegments) throws IOException {
+        throw new RuntimeException("Merging not available for remote recorder");
+    }
 }

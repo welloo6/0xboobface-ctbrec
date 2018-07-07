@@ -56,11 +56,12 @@ public class Launcher extends Application {
             new Thread() {
                 @Override
                 public void run() {
-                    try {
-                        client.login();
-                    } catch (IOException e1) {
-                        LOG.warn("Initial login failed" , e1);
-                    }
+                    // TODO enable this again
+                    //                    try {
+                    //                        client.login();
+                    //                    } catch (IOException e1) {
+                    //                        LOG.warn("Initial login failed" , e1);
+                    //                    }
                 };
             }.start();
         }

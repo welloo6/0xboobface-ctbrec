@@ -45,8 +45,11 @@ public class SettingsTab extends Tab {
     private TextField username;
     private TextField server;
     private TextField port;
+    private static final int CHECKBOX_MARGIN = 6;
     private CheckBox loadResolution;
-    private CheckBox secureCommunication;
+    private CheckBox secureCommunication = new CheckBox();
+    private CheckBox automerge = new CheckBox();
+    private CheckBox automergeKeepSegments = new CheckBox();
     private PasswordField password;
     private RadioButton recordLocal;
     private RadioButton recordRemote;
@@ -107,7 +110,8 @@ public class SettingsTab extends Tab {
         GridPane.setColumnSpan(password, 2);
         layout.add(password, 1, row);
 
-        layout.add(new Label("Display stream resolution in overview"), 0, ++row);
+        Label l = new Label("Display stream resolution in overview");
+        layout.add(l, 0, ++row);
         loadResolution = new CheckBox();
         loadResolution.setSelected(Config.getInstance().getSettings().determineResolution);
         loadResolution.setOnAction((e) -> {
@@ -116,9 +120,22 @@ public class SettingsTab extends Tab {
                 ThumbOverviewTab.queue.clear();
             }
         });
+        GridPane.setMargin(l, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
+        GridPane.setMargin(loadResolution, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
         layout.add(loadResolution, 1, row);
 
-        layout.add(new Label(), 0, ++row);
+        l = new Label("Auto-merge recordings");
+        layout.add(l, 0, ++row);
+        automerge.setSelected(Config.getInstance().getSettings().automerge);
+        automerge.setOnAction((e) -> Config.getInstance().getSettings().automerge = automerge.isSelected());
+        GridPane.setMargin(l, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
+        GridPane.setMargin(automerge, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
+        layout.add(automerge, 1, row);
+
+        automergeKeepSegments.setText("Keep segments");
+        automergeKeepSegments.setOnAction((e) -> Config.getInstance().getSettings().automergeKeepSegments = automergeKeepSegments.isSelected());
+        GridPane.setMargin(automergeKeepSegments, new Insets(CHECKBOX_MARGIN, 0, 30, 0));
+        layout.add(automergeKeepSegments, 1, ++row);
 
         layout.add(new Label("Record Location"), 0, ++row);
         recordLocation = new ToggleGroup();
@@ -132,9 +149,7 @@ public class SettingsTab extends Tab {
         layout.add(recordRemote, 2, row);
         recordLocation.selectedToggleProperty().addListener((e) -> {
             Config.getInstance().getSettings().localRecording = recordLocal.isSelected();
-            server.setDisable(recordLocal.isSelected());
-            port.setDisable(recordLocal.isSelected());
-
+            setRecordingMode(recordLocal.isSelected());
             Alert restart = new AutosizeAlert(AlertType.INFORMATION);
             restart.setTitle("Restart required");
             restart.setHeaderText("Restart required");
@@ -173,8 +188,8 @@ public class SettingsTab extends Tab {
         GridPane.setColumnSpan(port, 2);
         layout.add(port, 1, row);
 
-        layout.add(new Label("Require authentication"), 0, ++row);
-        secureCommunication = new CheckBox();
+        l = new Label("Require authentication");
+        layout.add(l, 0, ++row);
         secureCommunication.setSelected(Config.getInstance().getSettings().requireAuthentication);
         secureCommunication.setOnAction((e) -> {
             Config.getInstance().getSettings().requireAuthentication = secureCommunication.isSelected();
@@ -196,11 +211,19 @@ public class SettingsTab extends Tab {
                 keyDialog.show();
             }
         });
+        GridPane.setMargin(l, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
+        GridPane.setMargin(secureCommunication, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
         layout.add(secureCommunication, 1, row);
 
+        setRecordingMode(recordLocal.isSelected());
+    }
 
-        server.setDisable(recordLocal.isSelected());
-        port.setDisable(recordLocal.isSelected());
+    private void setRecordingMode(boolean local) {
+        server.setDisable(local);
+        port.setDisable(local);
+        secureCommunication.setDisable(local);
+        automerge.setDisable(!local);
+        automergeKeepSegments.setDisable(!local);
     }
 
     private ChangeListener<? super Boolean> createRecordingsDirectoryFocusListener() {

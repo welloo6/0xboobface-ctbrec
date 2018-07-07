@@ -30,10 +30,10 @@ import ctbrec.Config;
 import ctbrec.HttpClient;
 import ctbrec.Model;
 import ctbrec.Recording;
+import ctbrec.Recording.STATUS;
+import ctbrec.recorder.PlaylistGenerator.InvalidPlaylistException;
 import ctbrec.recorder.download.Download;
 import ctbrec.recorder.download.HlsDownload;
-import ctbrec.recorder.server.PlaylistGenerator;
-import ctbrec.recorder.server.PlaylistGenerator.InvalidPlaylistException;
 
 public class LocalRecorder implements Recorder {
 
@@ -43,12 +43,14 @@ public class LocalRecorder implements Recorder {
     private Lock lock = new ReentrantLock();
     private Map<Model, Download> recordingProcesses = Collections.synchronizedMap(new HashMap<>());
     private Map<File, PlaylistGenerator> playlistGenerators = new HashMap<>();
+    private Map<File, SegmentMerger> segmentMergers = new HashMap<>();
     private Config config;
     private ProcessMonitor processMonitor;
     private OnlineMonitor onlineMonitor;
     private PlaylistGeneratorTrigger playlistGenTrigger;
     private HttpClient client = HttpClient.getInstance();
     private volatile boolean recording = true;
+    private List<File> deleteInProgress = Collections.synchronizedList(new ArrayList<>());
 
     public LocalRecorder(Config config) {
         this.config = config;
@@ -238,7 +240,7 @@ public class LocalRecorder implements Recorder {
                             LOG.debug("Recording terminated for model {}", m.getName());
                             iterator.remove();
                             restart.add(m);
-                            generatePlaylist(d.getDirectory());
+                            finishRecording(d.getDirectory());
                         }
                     }
                     for (Model m : restart) {
@@ -257,32 +259,71 @@ public class LocalRecorder implements Recorder {
             }
             LOG.debug(getName() + " terminated");
         }
-
     }
 
-    private void generatePlaylist(File recDir) {
+    private void finishRecording(File directory) {
         Thread t = new Thread() {
             @Override
             public void run() {
-                PlaylistGenerator playlistGenerator = new PlaylistGenerator();
-                playlistGenerators.put(recDir, playlistGenerator);
-                try {
-                    playlistGenerator.generate(recDir);
-                    playlistGenerator.validate(recDir);
-                } catch (IOException | ParseException | PlaylistException e) {
-                    LOG.error("Couldn't generate playlist file", e);
-                } catch (InvalidPlaylistException e) {
-                    LOG.error("Playlist is invalid", e);
-                    File playlist = new File(recDir, "playlist.m3u8");
-                    playlist.delete();
-                } finally {
-                    playlistGenerators.remove(recDir);
+                boolean local = Config.getInstance().getSettings().localRecording;
+                boolean automerge = Config.getInstance().getSettings().automerge;
+                generatePlaylist(directory);
+                if(local && automerge) {
+                    File mergedFile = merge(directory);
+                    if(mergedFile != null && mergedFile.exists() && mergedFile.length() > 0) {
+                        LOG.debug("Merged file {}", mergedFile.getAbsolutePath());
+                        if (!Config.getInstance().getSettings().automergeKeepSegments) {
+                            try {
+                                LOG.debug("Deleting directory {}", directory);
+                                delete(directory, mergedFile);
+                            } catch (IOException e) {
+                                LOG.error("Couldn't delete directory {}", directory, e);
+                            }
+                        }
+                    } else {
+                        LOG.error("Merged file not found {}", mergedFile);
+                    }
                 }
             }
         };
         t.setDaemon(true);
-        t.setName("Playlist Generator " + recDir.toString());
+        t.setName("Postprocessing" + directory.toString());
         t.start();
+    }
+
+
+    private File merge(File recDir) {
+        SegmentMerger segmentMerger = new SegmentMerger();
+        segmentMergers.put(recDir, segmentMerger);
+        try {
+            File mergedFile = Recording.mergedFileFromDirectory(recDir);
+            segmentMerger.merge(recDir, mergedFile);
+            return mergedFile;
+        } catch (IOException e) {
+            LOG.error("Couldn't generate playlist file", e);
+        } catch (ParseException | PlaylistException | InvalidPlaylistException e) {
+            LOG.error("Playlist is invalid", e);
+        } finally {
+            segmentMergers.remove(recDir);
+        }
+        return null;
+    }
+
+    private void generatePlaylist(File recDir) {
+        PlaylistGenerator playlistGenerator = new PlaylistGenerator();
+        playlistGenerators.put(recDir, playlistGenerator);
+        try {
+            playlistGenerator.generate(recDir);
+            playlistGenerator.validate(recDir);
+        } catch (IOException | ParseException | PlaylistException e) {
+            LOG.error("Couldn't generate playlist file", e);
+        } catch (InvalidPlaylistException e) {
+            LOG.error("Playlist is invalid", e);
+            File playlist = new File(recDir, "playlist.m3u8");
+            playlist.delete();
+        } finally {
+            playlistGenerators.remove(recDir);
+        }
     }
 
     private class OnlineMonitor extends Thread {
@@ -354,8 +395,11 @@ public class LocalRecorder implements Recorder {
                                 }
                             }
                             if(!recordingProcessFound) {
-                                // finished recording without playlist -> generate it
-                                generatePlaylist(recDir);
+                                if(deleteInProgress.contains(recDir)) {
+                                    LOG.debug("{} is being deleted. Not going to generate a playlist", recDir);
+                                } else {
+                                    finishRecording(recDir);
+                                }
                             }
                         }
                     }
@@ -406,12 +450,23 @@ public class LocalRecorder implements Recorder {
                         if(recording.hasPlaylist()) {
                             recording.setStatus(FINISHED);
                         } else {
-                            PlaylistGenerator playlistGenerator = playlistGenerators.get(rec);
-                            if(playlistGenerator != null) {
-                                recording.setStatus(GENERATING_PLAYLIST);
-                                recording.setProgress(playlistGenerator.getProgress());
+                            // this might be a merged recording
+                            if(Recording.isMergedRecording(rec)) {
+                                recording.setStatus(FINISHED);
                             } else {
-                                recording.setStatus(RECORDING);
+                                PlaylistGenerator playlistGenerator = playlistGenerators.get(rec);
+                                if(playlistGenerator != null) {
+                                    recording.setStatus(GENERATING_PLAYLIST);
+                                    recording.setProgress(playlistGenerator.getProgress());
+                                } else {
+                                    SegmentMerger merger = segmentMergers.get(rec);
+                                    if(merger != null) {
+                                        recording.setStatus(STATUS.MERGING);
+                                        recording.setProgress(merger.getProgress());
+                                    } else {
+                                        recording.setStatus(RECORDING);
+                                    }
+                                }
                             }
                         }
                         recordings.add(recording);
@@ -437,31 +492,72 @@ public class LocalRecorder implements Recorder {
     public void delete(Recording recording) throws IOException {
         File recordingsDir = new File(config.getSettings().recordingsDir);
         File directory = new File(recordingsDir, recording.getPath());
+        delete(directory, new File[] {});
+    }
+
+    private void delete(File directory, File...excludes) throws IOException {
         if(!directory.exists()) {
             throw new IOException("Recording does not exist");
         }
-        File[] files = directory.listFiles();
-        boolean deletedAllFiles = true;
-        for (File file : files) {
-            try {
-                Files.delete(file.toPath());
-            } catch (Exception e) {
-                deletedAllFiles = false;
-                LOG.debug("Couldn't delete {}", file, e);
-            }
-        }
 
-        if(deletedAllFiles) {
-            boolean deleted = directory.delete();
-            if(deleted) {
-                if(directory.getParentFile().list().length == 0) {
-                    directory.getParentFile().delete();
+        try {
+            deleteInProgress.add(directory);
+            File[] files = directory.listFiles();
+            boolean deletedAllFiles = true;
+            for (File file : files) {
+                boolean skip = false;
+                for (File exclude : excludes) {
+                    if(file.equals(exclude)) {
+                        skip = true;
+                        break;
+                    }
+                }
+                if(skip) {
+                    continue;
+                }
+
+                try {
+                    Files.delete(file.toPath());
+                } catch (Exception e) {
+                    deletedAllFiles = false;
+                    LOG.debug("Couldn't delete {}", file, e);
+                }
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            if(deletedAllFiles) {
+                if(directory.list().length == 0) {
+                    boolean deleted = directory.delete();
+                    if(deleted) {
+                        if(directory.getParentFile().list().length == 0) {
+                            directory.getParentFile().delete();
+                        }
+                    } else {
+                        throw new IOException("Couldn't delete " + directory);
+                    }
                 }
             } else {
-                throw new IOException("Couldn't delete " + directory);
+                throw new IOException("Couldn't delete all files in " + directory);
             }
-        } else {
-            throw new IOException("Couldn't delete all files in " + directory);
+        } finally {
+            deleteInProgress.remove(directory);
+        }
+    }
+
+    @Override
+    public void merge(Recording rec, boolean keepSegments) throws IOException {
+        File recordingsDir = new File(config.getSettings().recordingsDir);
+        File directory = new File(recordingsDir, rec.getPath());
+        merge(directory);
+        if(!keepSegments) {
+            File mergedFile = Recording.mergedFileFromDirectory(directory);
+            delete(directory, mergedFile);
         }
     }
 }

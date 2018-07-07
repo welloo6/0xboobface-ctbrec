@@ -1,4 +1,4 @@
-package ctbrec.recorder.server;
+package ctbrec.recorder;
 
 @FunctionalInterface
 public interface ProgressListener {

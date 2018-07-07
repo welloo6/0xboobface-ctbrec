@@ -1,4 +1,4 @@
-package ctbrec.recorder.server;
+package ctbrec.recorder;
 
 import java.io.File;
 import java.io.FileInputStream;

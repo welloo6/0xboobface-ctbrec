@@ -71,7 +71,12 @@ public class Player {
             try {
                 if (Config.getInstance().getSettings().localRecording && rec != null) {
                     File dir = new File(Config.getInstance().getSettings().recordingsDir, rec.getPath());
-                    File file = new File(dir, "playlist.m3u8");
+                    File file = null;
+                    if(Recording.isMergedRecording(rec)) {
+                        file = Recording.mergedFileFromDirectory(dir);
+                    } else {
+                        file = new File(dir, "playlist.m3u8");
+                    }
                     playerProcess = rt.exec(Config.getInstance().getSettings().mediaPlayer + " " + file, OS.getEnvironment(), dir);
                 } else {
                     playerProcess = rt.exec(Config.getInstance().getSettings().mediaPlayer + " " + url);

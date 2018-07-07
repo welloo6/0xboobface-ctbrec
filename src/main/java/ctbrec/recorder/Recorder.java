@@ -23,6 +23,8 @@ public interface Recorder {
 
     public List<Recording> getRecordings() throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException;
 
+    public void merge(Recording recording, boolean keepSegments) throws IOException;
+
     public void delete(Recording recording) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException;
 
     public void shutdown();
