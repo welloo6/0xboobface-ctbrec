@@ -66,7 +66,8 @@ public class LocalRecorder implements Recorder {
         playlistGenTrigger.start();
 
         LOG.debug("Recorder initialized");
-        LOG.debug("Models to record: {}", models);
+        LOG.info("Models to record: {}", models);
+        LOG.info("Saving recordings in {}", config.getSettings().recordingsDir);
     }
 
     @Override
