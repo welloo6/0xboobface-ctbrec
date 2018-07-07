@@ -16,4 +16,6 @@ public class Settings {
     public String lastDownloadDir = "";
     public List<Model> models = new ArrayList<Model>();
     public boolean determineResolution = false;
+    public boolean requireAuthentication = false;
+    public byte[] key = null;
 }

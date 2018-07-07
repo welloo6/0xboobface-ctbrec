@@ -71,7 +71,7 @@ public class Config {
 
     public void save() throws IOException {
         Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<Settings> adapter = moshi.adapter(Settings.class);
+        JsonAdapter<Settings> adapter = moshi.adapter(Settings.class).indent("  ");
         String json = adapter.toJson(settings);
         File configDir = OS.getConfigDir();
         File configFile = new File(configDir, filename);

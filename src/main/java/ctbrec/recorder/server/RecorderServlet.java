@@ -3,9 +3,12 @@ package ctbrec.recorder.server;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import ctbrec.Config;
+import ctbrec.Hmac;
 import ctbrec.InstantJsonAdapter;
 import ctbrec.Model;
 import ctbrec.Recording;
@@ -43,6 +48,14 @@ public class RecorderServlet extends HttpServlet {
 
         try {
             String json = body(req);
+            boolean isRequestAuthenticated = checkAuthentication(req, json);
+            if(!isRequestAuthenticated) {
+                resp.setStatus(SC_UNAUTHORIZED);
+                String response = "{\"status\": \"error\", \"msg\": \"HMAC does not match\"}";
+                resp.getWriter().write(response);
+                return;
+            }
+
             LOG.debug("Request: {}", json);
             Moshi moshi = new Moshi.Builder()
                     .add(Instant.class, new InstantJsonAdapter())
@@ -114,6 +127,21 @@ public class RecorderServlet extends HttpServlet {
             resp.getWriter().write(response);
             LOG.error("Unexpected error", t);
         }
+    }
+
+    private boolean checkAuthentication(HttpServletRequest req, String body) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException {
+        boolean authenticated = false;
+        if(Config.getInstance().getSettings().key != null) {
+            if(req.getHeader("CTBREC-HMAC") == null) {
+                authenticated = false;
+            }
+
+            byte[] key = Config.getInstance().getSettings().key;
+            authenticated = Hmac.validate(body, key, req.getHeader("CTBREC-HMAC"));
+        } else {
+            authenticated = true;
+        }
+        return authenticated;
     }
 
     private String body(HttpServletRequest req) throws IOException {
