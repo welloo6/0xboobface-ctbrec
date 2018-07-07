@@ -26,12 +26,22 @@ public class HttpServer {
     private Server server = new Server();
 
     public HttpServer() throws Exception {
-        addShutdownHook(); // for graceful termination
-
         if(System.getProperty("ctbrec.config") == null) {
             System.setProperty("ctbrec.config", "server.json");
         }
+        try {
+            Config.init();
+        } catch (Exception e) {
+            LOG.error("Couldn't load config", e);
+            System.exit(1);
+        }
+
+        addShutdownHook(); // for graceful termination
+
         config = Config.getInstance();
+        if(config.getSettings().key != null) {
+            LOG.info("HMAC authentication is enabled");
+        }
         recorder = new LocalRecorder(config);
         startHttpServer();
     }

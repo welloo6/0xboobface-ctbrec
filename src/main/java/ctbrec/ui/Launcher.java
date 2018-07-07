@@ -35,6 +35,15 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        try {
+            Config.init();
+        } catch (Exception e) {
+            Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
+            alert.setTitle("Whoopsie");
+            alert.setContentText("Couldn't load settings.");
+            alert.showAndWait();
+            System.exit(1);
+        }
         hostServices = getHostServices();
         Config config = Config.getInstance();
         client = HttpClient.getInstance();

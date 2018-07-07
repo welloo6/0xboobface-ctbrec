@@ -6,6 +6,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -16,8 +17,6 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import ctbrec.recorder.OS;
-import ctbrec.ui.AutosizeAlert;
-import javafx.scene.control.Alert;
 import okio.Buffer;
 import okio.BufferedSource;
 
@@ -25,11 +24,11 @@ public class Config {
 
     private static final transient Logger LOG = LoggerFactory.getLogger(Config.class);
 
-    private static Config instance = new Config();
+    private static Config instance;
     private Settings settings;
     private String filename;
 
-    private Config() {
+    private Config() throws FileNotFoundException, IOException {
         if(System.getProperty("ctbrec.config") != null) {
             filename = System.getProperty("ctbrec.config");
         } else {
@@ -38,7 +37,7 @@ public class Config {
         load();
     }
 
-    private void load() {
+    private void load() throws FileNotFoundException, IOException {
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Settings> adapter = moshi.adapter(Settings.class);
         File configDir = OS.getConfigDir();
@@ -48,12 +47,6 @@ public class Config {
             try(FileInputStream fin = new FileInputStream(configFile); Buffer buffer = new Buffer()) {
                 BufferedSource source =  buffer.readFrom(fin);
                 settings = adapter.fromJson(source);
-            } catch(Exception e) {
-                Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
-                alert.setTitle("Whoopsie");
-                alert.setContentText("Couldn't load settings.");
-                alert.showAndWait();
-                System.exit(1);
             }
         } else {
             LOG.error("Config file does not exist. Falling back to default values.");
@@ -61,7 +54,16 @@ public class Config {
         }
     }
 
-    public static Config getInstance() {
+    public static synchronized void init() throws FileNotFoundException, IOException {
+        if(instance == null) {
+            instance = new Config();
+        }
+    }
+
+    public static synchronized Config getInstance() {
+        if(instance == null) {
+            throw new IllegalStateException("Config not initialized, call init() first");
+        }
         return instance;
     }
 
