@@ -37,7 +37,6 @@
 		-->
 	</root>
 	
-	ctbrec.LoggingInterceptor
 	<logger name="ctbrec.LoggingInterceptor" level="INFO"/>
 	<logger name="ctbrec.recorder.Chaturbate" level="INFO" />
 	<logger name="ctbrec.recorder.server.HlsServlet" level="INFO"/>
@@ -45,15 +44,5 @@
 	<logger name="ctbrec.ui.CookieJarImpl" level="INFO"/>
 	<logger name="ctbrec.ui.ThumbOverviewTab" level="DEBUG"/>
 	<logger name="org.eclipse.jetty" level="INFO" />
-
-	<!-- 
-	<logger name="com.zaxxer.hikari" level="INFO"/>
-	<logger name="org.eclipse.jetty" level="INFO"/>
-	<logger name="org.quartz" level="WARN"/>
-	<logger name="SignalR" level="INFO"/>
-	<logger name="org.hampelratte.parkett.exchange.bittrex.Bittrex" level="INFO"/>
-	<logger name="org.hampelratte.parkett.price.tracker.bittrex.ws.PriceTracker" level="INFO"/>
-	<logger name="org.ta4j" level="ERROR"/>
- 	-->
 	
 </configuration>
