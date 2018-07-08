@@ -522,13 +522,6 @@ public class LocalRecorder implements Recorder {
                     deletedAllFiles = false;
                     LOG.debug("Couldn't delete {}", file, e);
                 }
-
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
             }
 
             if(deletedAllFiles) {
