@@ -69,7 +69,7 @@ public class HlsDownload implements Download {
                 Files.createDirectories(downloadDir);
             }
 
-            String segments = parseMaster(streamInfo.url);
+            String segments = parseMaster(streamInfo.url, model.getStreamUrlIndex());
             if(segments != null) {
                 int lastSegment = 0;
                 int nextSegment = 0;
@@ -167,14 +167,19 @@ public class HlsDownload implements Download {
         return null;
     }
 
-    private String parseMaster(String url) throws IOException, ParseException, PlaylistException {
+    private String parseMaster(String url, int streamUrlIndex) throws IOException, ParseException, PlaylistException {
         URL masterUrl = new URL(url);
         InputStream inputStream = masterUrl.openStream();
         PlaylistParser parser = new PlaylistParser(inputStream, Format.EXT_M3U, Encoding.UTF_8);
         Playlist playlist = parser.parse();
         if(playlist.hasMasterPlaylist()) {
             MasterPlaylist master = playlist.getMasterPlaylist();
-            PlaylistData bestQuality = master.getPlaylists().get(master.getPlaylists().size()-1);
+            PlaylistData bestQuality = null;
+            if(streamUrlIndex >= 0 && streamUrlIndex < master.getPlaylists().size()) {
+                bestQuality = master.getPlaylists().get(streamUrlIndex);
+            } else {
+                bestQuality = master.getPlaylists().get(master.getPlaylists().size()-1);
+            }
             String uri = bestQuality.getUri();
             if(!uri.startsWith("http")) {
                 String _masterUrl = masterUrl.toString();

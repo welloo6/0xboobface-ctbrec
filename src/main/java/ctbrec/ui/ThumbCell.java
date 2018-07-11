@@ -1,15 +1,21 @@
 package ctbrec.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.iheartradio.m3u8.ParseException;
 import com.iheartradio.m3u8.PlaylistException;
+import com.iheartradio.m3u8.data.MasterPlaylist;
+import com.iheartradio.m3u8.data.PlaylistData;
 
 import ctbrec.Config;
 import ctbrec.HttpClient;
@@ -17,6 +23,7 @@ import ctbrec.Model;
 import ctbrec.recorder.Chaturbate;
 import ctbrec.recorder.Recorder;
 import ctbrec.recorder.StreamInfo;
+import ctbrec.recorder.download.StreamSource;
 import javafx.animation.FadeTransition;
 import javafx.animation.FillTransition;
 import javafx.animation.Interpolator;
@@ -26,12 +33,14 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -334,16 +343,76 @@ public class ThumbCell extends StackPane {
 
     private void startStopAction(boolean start) {
         setCursor(Cursor.WAIT);
+
+        boolean selectSource = Config.getInstance().getSettings().chooseStreamQuality;
+        if(selectSource && start) {
+            Task<List<StreamSource>> selectStreamSource = new Task<List<StreamSource>>() {
+                @Override
+                protected List<StreamSource> call() throws Exception {
+                    StreamInfo streamInfo = Chaturbate.getStreamInfo(model, client);
+                    MasterPlaylist masterPlaylist = Chaturbate.getMasterPlaylist(streamInfo, client);
+                    List<StreamSource> sources = new ArrayList<>();
+                    for (PlaylistData playlist : masterPlaylist.getPlaylists()) {
+                        if (playlist.hasStreamInfo()) {
+                            StreamSource src = new StreamSource();
+                            src.bandwidth = playlist.getStreamInfo().getBandwidth();
+                            src.height = playlist.getStreamInfo().getResolution().height;
+                            String masterUrl = streamInfo.url;
+                            String baseUrl = masterUrl.substring(0, masterUrl.lastIndexOf('/') + 1);
+                            String segmentUri = baseUrl + playlist.getUri();
+                            src.mediaPlaylistUrl = segmentUri;
+                            LOG.trace("Media playlist {}", src.mediaPlaylistUrl);
+                            sources.add(src);
+                        }
+                    }
+                    return sources;
+                }
+            };
+            selectStreamSource.setOnSucceeded((e) -> {
+                List<StreamSource> sources;
+                try {
+                    sources = selectStreamSource.get();
+                    ChoiceDialog<StreamSource> choiceDialog = new ChoiceDialog<StreamSource>(sources.get(sources.size()-1), sources);
+                    choiceDialog.setTitle("Stream Quality");
+                    choiceDialog.setHeaderText("Select your preferred stream quality");
+                    Optional<StreamSource> selectedSource = choiceDialog.showAndWait();
+                    if(selectedSource.isPresent()) {
+                        int index = sources.indexOf(selectedSource.get());
+                        model.setStreamUrlIndex(index);
+                        _startStopAction(model, start);
+                    }
+                } catch (InterruptedException | ExecutionException e1) {
+                    Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Couldn't start/stop recording");
+                    alert.setContentText("I/O error while starting/stopping the recording: " + e1.getLocalizedMessage());
+                    alert.showAndWait();
+                }
+            });
+            selectStreamSource.setOnFailed((e) -> {
+                Alert alert = new AutosizeAlert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Couldn't start/stop recording");
+                alert.setContentText("I/O error while starting/stopping the recording: " + selectStreamSource.getException().getLocalizedMessage());
+                alert.showAndWait();
+            });
+            new Thread(selectStreamSource).start();
+        } else {
+            _startStopAction(model, start);
+        }
+    }
+
+    private void _startStopAction(Model model, boolean start) {
         new Thread() {
             @Override
             public void run() {
                 try {
                     if(start) {
+                        // start the recording
                         recorder.startRecording(model);
                     } else {
                         recorder.stopRecording(model);
                     }
-                    setRecording(start);
                 } catch (Exception e1) {
                     LOG.error("Couldn't start/stop recording", e1);
                     Platform.runLater(() -> {

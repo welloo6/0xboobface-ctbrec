@@ -50,6 +50,7 @@ public class SettingsTab extends Tab {
     private CheckBox secureCommunication = new CheckBox();
     private CheckBox automerge = new CheckBox();
     private CheckBox automergeKeepSegments = new CheckBox();
+    private CheckBox chooseStreamQuality = new CheckBox();
     private PasswordField password;
     private RadioButton recordLocal;
     private RadioButton recordRemote;
@@ -123,6 +124,14 @@ public class SettingsTab extends Tab {
         GridPane.setMargin(l, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
         GridPane.setMargin(loadResolution, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
         layout.add(loadResolution, 1, row);
+
+        l = new Label("Manually select stream quality");
+        layout.add(l, 0, ++row);
+        chooseStreamQuality.setSelected(Config.getInstance().getSettings().chooseStreamQuality);
+        chooseStreamQuality.setOnAction((e) -> Config.getInstance().getSettings().chooseStreamQuality = chooseStreamQuality.isSelected());
+        GridPane.setMargin(l, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
+        GridPane.setMargin(chooseStreamQuality, new Insets(CHECKBOX_MARGIN, 0, 0, 0));
+        layout.add(chooseStreamQuality, 1, row);
 
         l = new Label("Auto-merge recordings");
         layout.add(l, 0, ++row);

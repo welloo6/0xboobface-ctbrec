@@ -10,6 +10,7 @@ public class Model {
     private String description;
     private List<String> tags = new ArrayList<>();
     private boolean online = false;
+    private int streamUrlIndex = -1;
 
     public String getUrl() {
         return url;
@@ -57,6 +58,14 @@ public class Model {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getStreamUrlIndex() {
+        return streamUrlIndex;
+    }
+
+    public void setStreamUrlIndex(int streamUrlIndex) {
+        this.streamUrlIndex = streamUrlIndex;
     }
 
     @Override

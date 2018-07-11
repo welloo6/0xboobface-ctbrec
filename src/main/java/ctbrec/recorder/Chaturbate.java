@@ -2,7 +2,6 @@ package ctbrec.recorder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,11 +60,7 @@ public class Chaturbate {
             return res;
         }
 
-        URL masterUrl = new URL(streamInfo.url);
-        InputStream inputStream = masterUrl.openStream();
-        PlaylistParser parser = new PlaylistParser(inputStream, Format.EXT_M3U, Encoding.UTF_8);
-        Playlist playlist = parser.parse();
-        MasterPlaylist master = playlist.getMasterPlaylist();
+        MasterPlaylist master = getMasterPlaylist(model, client);
         for (PlaylistData playlistData : master.getPlaylists()) {
             if(playlistData.hasStreamInfo() && playlistData.getStreamInfo().hasResolution()) {
                 int h = playlistData.getStreamInfo().getResolution().height;
@@ -77,5 +72,21 @@ public class Chaturbate {
             }
         }
         return res;
+    }
+
+    public static MasterPlaylist getMasterPlaylist(Model model, HttpClient client) throws IOException, ParseException, PlaylistException {
+        StreamInfo streamInfo = getStreamInfo(model, client);
+        return getMasterPlaylist(streamInfo, client);
+    }
+
+    public static MasterPlaylist getMasterPlaylist(StreamInfo streamInfo, HttpClient client) throws IOException, ParseException, PlaylistException {
+        LOG.trace("Loading master playlist {}", streamInfo.url);
+        Request req = new Request.Builder().url(streamInfo.url).build();
+        Response response = client.execute(req);
+        InputStream inputStream = response.body().byteStream();
+        PlaylistParser parser = new PlaylistParser(inputStream, Format.EXT_M3U, Encoding.UTF_8);
+        Playlist playlist = parser.parse();
+        MasterPlaylist master = playlist.getMasterPlaylist();
+        return master;
     }
 }

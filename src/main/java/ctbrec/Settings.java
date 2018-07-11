@@ -19,5 +19,6 @@ public class Settings {
     public boolean automergeKeepSegments = false;
     public boolean determineResolution = false;
     public boolean requireAuthentication = false;
+    public boolean chooseStreamQuality = false;
     public byte[] key = null;
 }

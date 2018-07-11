@@ -29,7 +29,7 @@
 	</appender>
     -->
 
-	<root level="debug">
+	<root level="trace">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 		<!--
@@ -38,7 +38,9 @@
 	</root>
 	
 	<logger name="ctbrec.LoggingInterceptor" level="INFO"/>
+	<!-- 
 	<logger name="ctbrec.recorder.Chaturbate" level="INFO" />
+	 -->
 	<logger name="ctbrec.recorder.server.HlsServlet" level="INFO"/>
 	<logger name="ctbrec.recorder.server.RecorderServlet" level="INFO"/>
 	<logger name="ctbrec.ui.CookieJarImpl" level="INFO"/>

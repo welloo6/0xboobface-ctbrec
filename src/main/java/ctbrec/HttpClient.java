@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import ctbrec.ui.CookieJarImpl;
 import ctbrec.ui.HtmlParser;
 import ctbrec.ui.Launcher;
+import okhttp3.ConnectionPool;
 import okhttp3.Cookie;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -32,7 +33,8 @@ public class HttpClient {
                 .cookieJar(cookieJar)
                 .connectTimeout(Config.getInstance().getSettings().httpTimeout, TimeUnit.SECONDS)
                 .readTimeout(Config.getInstance().getSettings().httpTimeout, TimeUnit.SECONDS)
-                .addInterceptor(new LoggingInterceptor())
+                .connectionPool(new ConnectionPool(50, 10, TimeUnit.MINUTES))
+                //.addInterceptor(new LoggingInterceptor())
                 .build();
     }
 
