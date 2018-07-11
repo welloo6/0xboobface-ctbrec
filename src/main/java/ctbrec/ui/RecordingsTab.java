@@ -431,6 +431,9 @@ public class RecordingsTab extends Tab implements TabSelectionListener {
     }
 
     private void delete(Recording r) {
+        if(r.getStatus() != STATUS.FINISHED) {
+            return;
+        }
         table.setCursor(Cursor.WAIT);
         String msg = "Delete " + r.getModelName() + "/" + r.getStartDate() + " for good?";
         AutosizeAlert confirm = new AutosizeAlert(AlertType.CONFIRMATION, msg, YES, NO);
