@@ -29,7 +29,7 @@
 	</appender>
     -->
 
-	<root level="trace">
+	<root level="debug">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 		<!--

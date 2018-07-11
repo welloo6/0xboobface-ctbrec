@@ -38,6 +38,8 @@ import ctbrec.HttpClient;
 import ctbrec.Model;
 import ctbrec.recorder.Chaturbate;
 import ctbrec.recorder.StreamInfo;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class HlsDownload implements Download {
 
@@ -82,7 +84,7 @@ public class HlsDownload implements Download {
                         for (int i = nextSegment; i < lsp.seq; i++) {
                             URL segmentUrl = new URL(first.replaceAll(Integer.toString(seq), Integer.toString(i)));
                             LOG.debug("Reloading segment {} for model {}", i, model.getName());
-                            threadPool.submit(new SegmentDownload(segmentUrl, downloadDir));
+                            threadPool.submit(new SegmentDownload(segmentUrl, downloadDir, client));
                         }
                         // TODO switch to a lower bitrate/resolution ?!?
                     }
@@ -92,7 +94,7 @@ public class HlsDownload implements Download {
                             skip--;
                         } else {
                             URL segmentUrl = new URL(segment);
-                            threadPool.submit(new SegmentDownload(segmentUrl, downloadDir));
+                            threadPool.submit(new SegmentDownload(segmentUrl, downloadDir, client));
                             //new SegmentDownload(segment, downloadDir).call();
                         }
                     }
@@ -142,7 +144,9 @@ public class HlsDownload implements Download {
 
     private LiveStreamingPlaylist parseSegments(String segments) throws IOException, ParseException, PlaylistException {
         URL segmentsUrl = new URL(segments);
-        InputStream inputStream = segmentsUrl.openStream();
+        Request request = new Request.Builder().url(segmentsUrl).addHeader("connection", "keep-alive").build();
+        Response response = client.execute(request);
+        InputStream inputStream = response.body().byteStream();
         PlaylistParser parser = new PlaylistParser(inputStream, Format.EXT_M3U, Encoding.UTF_8);
         Playlist playlist = parser.parse();
         if(playlist.hasMediaPlaylist()) {
@@ -168,8 +172,10 @@ public class HlsDownload implements Download {
     }
 
     private String parseMaster(String url, int streamUrlIndex) throws IOException, ParseException, PlaylistException {
-        URL masterUrl = new URL(url);
-        InputStream inputStream = masterUrl.openStream();
+        Request request = new Request.Builder().url(url).addHeader("connection", "keep-alive").build();
+        Response response = client.execute(request);
+        InputStream inputStream = response.body().byteStream();
+
         PlaylistParser parser = new PlaylistParser(inputStream, Format.EXT_M3U, Encoding.UTF_8);
         Playlist playlist = parser.parse();
         if(playlist.hasMasterPlaylist()) {
@@ -182,9 +188,9 @@ public class HlsDownload implements Download {
             }
             String uri = bestQuality.getUri();
             if(!uri.startsWith("http")) {
-                String _masterUrl = masterUrl.toString();
-                _masterUrl = _masterUrl.substring(0, _masterUrl.lastIndexOf('/') + 1);
-                String segmentUri = _masterUrl + uri;
+                String masterUrl = url;
+                String baseUri = masterUrl.substring(0, masterUrl.lastIndexOf('/') + 1);
+                String segmentUri = baseUri + uri;
                 return segmentUri;
             }
         }
@@ -202,9 +208,11 @@ public class HlsDownload implements Download {
     private static class SegmentDownload implements Callable<Boolean> {
         private URL url;
         private Path file;
+        private HttpClient client;
 
-        public SegmentDownload(URL url, Path dir) {
+        public SegmentDownload(URL url, Path dir, HttpClient client) {
             this.url = url;
+            this.client = client;
             File path = new File(url.getPath());
             file = FileSystems.getDefault().getPath(dir.toString(), path.getName());
         }
@@ -213,8 +221,11 @@ public class HlsDownload implements Download {
         public Boolean call() throws Exception {
             LOG.trace("Downloading segment to " + file);
             for (int i = 0; i < 3; i++) {
-                try( FileOutputStream fos = new FileOutputStream(file.toFile());
-                        InputStream in = url.openStream())
+                Request request = new Request.Builder().url(url).addHeader("connection", "keep-alive").build();
+                Response response = client.execute(request);
+                try (
+                        FileOutputStream fos = new FileOutputStream(file.toFile());
+                        InputStream in = response.body().byteStream())
                 {
                     byte[] b = new byte[1024 * 100];
                     int length = -1;
