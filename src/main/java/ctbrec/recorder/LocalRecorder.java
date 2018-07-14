@@ -351,8 +351,9 @@ public class LocalRecorder implements Recorder {
                                     LOG.info("Model {}'s room back to public. Starting recording", model);
                                     startRecordingProcess(model);
                                 }
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 LOG.error("Couldn't check if model {} is online", model.getName(), e);
+                                model.setOnline(false);
                             }
                         }
                     }
