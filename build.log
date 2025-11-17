@@ -1,0 +1,302 @@
+Picked up JAVA_TOOL_OPTIONS: -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/C:/Users/aguyi.DESKTOP-2FV5PBV/AppData/Roaming/Code/User/globalStorage/pleiades.java-extension-pack-jdk/maven/latest/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------------< ctbrec:ctbrec >----------------------------
+[INFO] Building ctbrec 1.2.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ctbrec ---
+[INFO] Copying 19 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ ctbrec ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 43 source files with javac [debug target 1.8] to target\classes
+[INFO] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/recorder/download/HlsDownload.java: Some input files use or override a deprecated API.
+[INFO] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/recorder/download/HlsDownload.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] bootstrap class path is not set in conjunction with -source 8
+  not setting the bootstrap class path may lead to class files that cannot run on JDK 8
+    --release 8 is recommended instead of -source 8 -target 1.8 because it sets the bootstrap class path automatically
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 4 warnings 
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[14,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[15,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[16,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[17,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[18,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[19,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[20,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[21,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[22,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[23,36] package javafx.scene.control.TabPane does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[24,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[25,20] package javafx.stage does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[27,31] cannot find symbol
+  symbol: class Application
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[34,20] cannot find symbol
+  symbol:   class HostServices
+  location: class ctbrec.ui.Launcher
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[37,23] cannot find symbol
+  symbol:   class Stage
+  location: class ctbrec.ui.Launcher
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[135,5] cannot find symbol
+  symbol:   class Tab
+  location: class ctbrec.ui.Launcher
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[3,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[4,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[5,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[7,36] cannot find symbol
+  symbol: class Alert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[9,26] cannot find symbol
+  symbol:   class AlertType
+  location: class ctbrec.ui.AutosizeAlert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[14,26] cannot find symbol
+  symbol:   class AlertType
+  location: class ctbrec.ui.AutosizeAlert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[14,55] cannot find symbol
+  symbol:   class ButtonType
+  location: class ctbrec.ui.AutosizeAlert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[5,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[6,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[7,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[8,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[9,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[10,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[11,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[12,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[13,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[14,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[15,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[16,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[17,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[18,26] package javafx.scene.paint does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[19,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[21,34] cannot find symbol
+  symbol: class Tab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[6,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[7,24] package javafx.scene.web does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[8,24] package javafx.scene.web does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[10,36] cannot find symbol
+  symbol: class Tab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[14,13] cannot find symbol
+  symbol:   class WebView
+  location: class ctbrec.ui.DonateTabHtml
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[3,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[4,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[28,26] package javafx.collections does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[29,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[30,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[31,32] package javafx.concurrent.Worker does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[32,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[33,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[34,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[35,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[36,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[37,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[38,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[39,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[40,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[41,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[42,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[43,19] package javafx.util does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[47,39] cannot find symbol
+  symbol: class Tab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[7,13] cannot find symbol
+  symbol:   class Label
+  location: class ctbrec.ui.FollowedTab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[22,27] cannot find symbol
+  symbol:   class WorkerStateEvent
+  location: class ctbrec.ui.FollowedTab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[54,5] cannot find symbol
+  symbol:   class ScheduledService
+  location: class ctbrec.ui.ThumbOverviewTab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[27,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[28,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[29,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[30,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[31,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[32,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[33,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[34,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[35,26] package javafx.collections does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[36,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[37,20] package javafx.event does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[38,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[39,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[40,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[41,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[42,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[43,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[44,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[45,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[46,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[47,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[48,26] package javafx.scene.input does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[49,26] package javafx.scene.input does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[50,26] package javafx.scene.input does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[51,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[52,26] package javafx.scene.paint does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[53,26] package javafx.scene.shape does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[54,26] package javafx.scene.shape does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[55,26] package javafx.scene.shape does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[56,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[57,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[58,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[59,19] package javafx.util does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[64,32] cannot find symbol
+  symbol: class StackPane
+[INFO] 100 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.610 s
+[INFO] Finished at: 2025-11-17T04:08:13-06:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project ctbrec: Compilation failure: Compilation failure: 
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[14,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[15,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[16,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[17,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[18,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[19,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[20,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[21,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[22,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[23,36] package javafx.scene.control.TabPane does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[24,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[25,20] package javafx.stage does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[27,31] cannot find symbol
+[ERROR]   symbol: class Application
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[34,20] cannot find symbol
+[ERROR]   symbol:   class HostServices
+[ERROR]   location: class ctbrec.ui.Launcher
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[37,23] cannot find symbol
+[ERROR]   symbol:   class Stage
+[ERROR]   location: class ctbrec.ui.Launcher
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/Launcher.java:[135,5] cannot find symbol
+[ERROR]   symbol:   class Tab
+[ERROR]   location: class ctbrec.ui.Launcher
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[3,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[4,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[5,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[7,36] cannot find symbol
+[ERROR]   symbol: class Alert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[9,26] cannot find symbol
+[ERROR]   symbol:   class AlertType
+[ERROR]   location: class ctbrec.ui.AutosizeAlert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[14,26] cannot find symbol
+[ERROR]   symbol:   class AlertType
+[ERROR]   location: class ctbrec.ui.AutosizeAlert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/AutosizeAlert.java:[14,55] cannot find symbol
+[ERROR]   symbol:   class ButtonType
+[ERROR]   location: class ctbrec.ui.AutosizeAlert
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[5,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[6,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[7,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[8,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[9,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[10,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[11,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[12,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[13,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[14,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[15,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[16,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[17,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[18,26] package javafx.scene.paint does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[19,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabFx.java:[21,34] cannot find symbol
+[ERROR]   symbol: class Tab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[6,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[7,24] package javafx.scene.web does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[8,24] package javafx.scene.web does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[10,36] cannot find symbol
+[ERROR]   symbol: class Tab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/DonateTabHtml.java:[14,13] cannot find symbol
+[ERROR]   symbol:   class WebView
+[ERROR]   location: class ctbrec.ui.DonateTabHtml
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[3,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[4,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[28,26] package javafx.collections does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[29,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[30,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[31,32] package javafx.concurrent.Worker does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[32,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[33,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[34,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[35,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[36,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[37,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[38,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[39,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[40,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[41,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[42,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[43,19] package javafx.util does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[47,39] cannot find symbol
+[ERROR]   symbol: class Tab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[7,13] cannot find symbol
+[ERROR]   symbol:   class Label
+[ERROR]   location: class ctbrec.ui.FollowedTab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/FollowedTab.java:[22,27] cannot find symbol
+[ERROR]   symbol:   class WorkerStateEvent
+[ERROR]   location: class ctbrec.ui.FollowedTab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbOverviewTab.java:[54,5] cannot find symbol
+[ERROR]   symbol:   class ScheduledService
+[ERROR]   location: class ctbrec.ui.ThumbOverviewTab
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[27,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[28,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[29,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[30,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[31,24] package javafx.animation does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[32,26] package javafx.application does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[33,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[34,26] package javafx.beans.value does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[35,26] package javafx.collections does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[36,25] package javafx.concurrent does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[37,20] package javafx.event does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[38,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[39,23] package javafx.geometry does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[40,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[41,20] package javafx.scene does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[42,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[43,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[44,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[45,28] package javafx.scene.control does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[46,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[47,26] package javafx.scene.image does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[48,26] package javafx.scene.input does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[49,26] package javafx.scene.input does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[50,26] package javafx.scene.input does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[51,27] package javafx.scene.layout does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[52,26] package javafx.scene.paint does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[53,26] package javafx.scene.shape does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[54,26] package javafx.scene.shape does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[55,26] package javafx.scene.shape does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[56,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[57,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[58,25] package javafx.scene.text does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[59,19] package javafx.util does not exist
+[ERROR] /d:/ctbrec-5.3.0-win64-jre/work/ghclone/work/upstream_candidate/src/main/java/ctbrec/ui/ThumbCell.java:[64,32] cannot find symbol
+[ERROR]   symbol: class StackPane
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
