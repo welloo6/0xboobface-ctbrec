@@ -72,5 +72,34 @@ public class CookieJarImpl implements CookieJar {
         return host;
     }
 
+    /**
+     * Add a cookie programmatically (used when seeding cookies from disk).
+     */
+    public void addCookie(Cookie cookie) {
+        if (cookie == null) return;
+        String host = cookie.domain();
+        if (host == null) return;
+        if (host.startsWith(".")) host = host.substring(1);
+        if (host.startsWith("www.")) host = host.substring(4);
+        List<Cookie> cookiesForUrl = cookieStore.get(host);
+        if (cookiesForUrl != null) {
+            cookiesForUrl = new ArrayList<Cookie>(cookiesForUrl);
+            // remove cookie with same name and path if present
+            for (Iterator<Cookie> iterator = cookiesForUrl.iterator(); iterator.hasNext();) {
+                Cookie oldCookie = iterator.next();
+                if (oldCookie.name().equalsIgnoreCase(cookie.name()) && Objects.equals(oldCookie.path(), cookie.path())) {
+                    iterator.remove();
+                }
+            }
+            cookiesForUrl.add(cookie);
+            cookieStore.put(host, cookiesForUrl);
+        } else {
+            List<Cookie> nl = new ArrayList<Cookie>();
+            nl.add(cookie);
+            cookieStore.put(host, nl);
+        }
+        LOG.debug("Added cookie {} for {}", cookie.name(), host);
+    }
+
 
 }
