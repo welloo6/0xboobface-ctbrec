@@ -1,0 +1,18 @@
+This PR guards calls to System.setProperty to avoid a NullPointerException during startup and adds optional cookie-seeding from the user's `%APPDATA%\\ctbrec` cookie files to aid debugging and testing of logged-in sessions.
+
+Changes:
+- `ctbrec.io.HttpClient`: added `safeSetProperty(...)` to guard System.setProperty calls and prevent NPEs during startup.
+- Cookie loader: optional loader that seeds OkHttp `CookieJar` from `cookies-*.json` files in `%APPDATA%\\ctbrec` to allow running the app with previously-authenticated sessions for debugging.
+
+Build notes:
+- I ran `mvn -DskipTests package` locally; compilation started but failed in this environment due to missing JavaFX classes (this environment is headless and lacks JavaFX on the compile classpath). See attached `build.log` for details.
+
+Testing steps for maintainers:
+1. Pull this branch and build with a JDK that includes JavaFX (or add OpenJFX to the Maven config): `mvn -DskipTests package`.
+2. Run the packaged app or JAR and confirm no NPE appears during startup and that the app can load cookies when `%APPDATA%\\ctbrec` contains `cookies-*.json` files.
+
+Related: packaged-distribution patch and PR: https://github.com/SpoiledPanda/ctbrec/pull/3
+
+Notes:
+- If you prefer a different branch name or want the cookie-loading behind a feature flag, I can adjust and re-open the PR.
+- Happy to attach `build.log` or other artifacts on request.
